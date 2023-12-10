@@ -20,6 +20,13 @@ import ButtonCreation from "./button/button-function/btn_fun_comp";
 import YoutubeBtnComp from "./components/youtube_btn/youtube_btn";
 import CorosolComponent from "./components/corosol/corosol_cls_comp";
 import ApiComponent from "./components/api/profile_api";
+import DemoCarousel from "./components/corosol/corosol_new_cls";
+import LifecycleComp from "./components/lifeCycle/mounting";
+import UpdatingPhaseComp from "./components/lifeCycle/updatingPhase";
+import UnmontingPhaseComp from "./components/lifeCycle/unmountingPhase";
+import { PureComponent } from "react";
+import PureComponentReact from "./components/pureComp/pureComp";
+import TableListComp from "./components/lifeCycle/tableList";
 const { tab } = require("@testing-library/user-event/dist/tab");
 
 function name() {
@@ -124,6 +131,12 @@ function name() {
     // <div><h1>deepthi</h1></div>
     // </div>
     <div>
+      {/* <TableListComp/> */}
+      {/* <PureComponentReact/> */}
+      <UnmontingPhaseComp/>
+      {/* <UpdatingPhaseComp/> */}
+      {/* <LifecycleComp/> */}
+      {/* <DemoCarousel/> */}
       {/* <CorosolComponent/>
       <YoutubeBtnComp/> */}
       {/* <ApiComponent/> */}
@@ -171,14 +184,14 @@ function name() {
       {/* <ButtonComponentFun /> */}
       {/* <NavBarComponent/> */}
       
-      <ButtonComponent/>
+      {/* <ButtonComponent/>
       <TableComponent/>
       <OrderList/>
       <UnOrderList/>
       <TableComponentClass/>
       <ImgComponent/>
       <ProfileComponent/>
-      <ImgClassComponent/>
+      <ImgClassComponent/> */}
       {/* <TableProfile/> */}
     </div>
 

@@ -1,21 +1,34 @@
-import axios from "axios";
 import { Component } from "react";
-import "./profile.css"
+import axios from "axios";
+import "../api/profile.css"
 import HaederBarComponent from "../react_header/header_react";
 import FooterComponent from "../footer/fotter";
+import { Audio } from 'react-loader-spinner';
 
-class ApiComponent extends Component {
-    // constructor(props){
-
-    //     state={
-    //         product:[]
-    //     }
-
-    // }
-    state = {
-        product: [],
-        count:0,
+class LifecycleComp extends Component{
+    constructor(){
+        super()
+        this.state={
+            count:0,
+            product:[]
+        }
     }
+
+    componentDidMount(){
+        axios.get("https://fakestoreapi.com/products")
+            .then((res) => {
+                if (res.status === 200) {
+                    this.setState({
+                        product: res.data,
+                        count:res.data.reduce((total,val)=>{
+                                return total+val.price
+                        },0)
+                    })
+                    // alert("fetched data success")
+                } 
+            }).catch(() => { alert("somthing went worng") })
+    }
+    
     handle = (id) => {
         let remove = this.state.product.filter((item) =>
             item.id !== id
@@ -33,46 +46,19 @@ class ApiComponent extends Component {
             product:removeAll
         })
     }
-    // totalsum (){
-    //     axios.get()
-    //     this.setState({
-    //         count:
-    //     })
-    // }
-    handleClick = () => {
 
-        // fetch("https://fakestoreapi.com/products")
-        // .then((response)=>{return response.json()})
-        // .then((response)=>{
-
-        // return this.setState({ product: response });
-        // })
-        axios.get("https://fakestoreapi.com/products")
-            .then((res) => {
-                if (res.status === 200) {
-                    this.setState({
-                        product: res.data,
-                        count:res.data.reduce((total,val)=>{
-                                return total+val.price
-                        },0)
-                    })
-                    // alert("fetched data success")
-                } else {
-                    alert("sonthing went wrong")
-                }
-            }).catch(() => { alert("somthing went worng") })
-    }
-    render() {
-        return (
+    render(){
+        return(
             <>
-                <HaederBarComponent />
-                <h1>${this.state.count.toFixed(2)}</h1>
+                <HaederBarComponent/>
+                <Chaild color="red"/>
+                <h1 style={{display:"inline"}}>${this.state.count.toFixed(2)}</h1>
                 <a href="#" className="btn btn-primary" onClick={() => { this.removeAll() }
-                }>remove All</a>
-                <button onClick={this.handleClick}>data</button><br></br><br></br>
+                }>remove All</a><br></br><br></br>
                 <div className="parent">
                     <div className="chaild">
                 {
+                    this.state.product.length>0?
                     this.state.product.map((val) => {
                         return (
                             <div className="card" key={val.id}>
@@ -90,14 +76,55 @@ class ApiComponent extends Component {
                             </div>
                             //  </div>
                         )
-                    })
+                    }):
+                    <Loadercomp/>
                 }
                     </div>
                 </div>
-                <FooterComponent />
+                <FooterComponent/>
+                
             </>
         )
-
     }
 }
-export default ApiComponent
+export default LifecycleComp
+
+class Chaild extends Component{
+
+    constructor(){
+        super()
+        this.state={
+            color:"green"
+        }
+    }
+
+    // static getDerivedStateFromProps(prevProps,prevState){
+    //     // console.log(prevProps,prevState);
+    //     return {color:prevProps.color}
+    // }
+    render(){
+        return(
+            <>
+            <h1 style={{color:this.state.color}}>hiii</h1>
+            </>
+        )
+    }
+}
+
+class Loadercomp extends Component{
+    render(){
+        return(
+            <>
+            <Audio
+  height="80"
+  width="80"
+  radius="9"
+  color="green"
+  ariaLabel="loading"
+  wrapperStyle
+  wrapperClass
+/>
+            </>
+        )
+    }
+}
